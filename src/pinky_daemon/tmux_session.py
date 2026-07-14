@@ -2927,6 +2927,10 @@ class TmuxSession:
         if cli_effort and cli_effort != "auto":
             parts.extend(["--effort", cli_effort])
 
+        # CC 2.1.200 removed AskUserQuestion's auto-continue fallback; headless
+        # agents now hang indefinitely if the model calls it (#850, #876).
+        parts.extend(["--disallowedTools", "AskUserQuestion"])
+
         # #151 native ultracode activation. ultracode boots at --effort xhigh
         # (above) because the CLI flag rejects the literal "ultracode". The
         # real tier — xhigh + the CLI's own standing dynamic-workflow
